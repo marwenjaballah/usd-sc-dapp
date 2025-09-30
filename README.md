@@ -50,13 +50,13 @@ Key files:
 
 ```mermaid
 flowchart TD
-  A[Wallet (Injected/WalletConnect)] --> B[RainbowKit]
-  B --> C[Wagmi Provider]
-  C --> D[React Query]
-  C --> E[App Pages (Next.js)]
-  E -->|useReadContract/useWriteContract| F[USD-SC Contract (lib/contract.ts)]
-  E --> G[Role/Token Hooks (hooks/*)]
-  E --> H[UI Components (components/*)]
+  A["Wallet"] --> B["RainbowKit"]
+  B --> C["Wagmi Provider"]
+  C --> D["React Query"]
+  C --> E["App Pages"]
+  E --> F["USD-SC Contract"]
+  E --> G["Role & Token Hooks"]
+  E --> H["UI Components"]
 ```
 
 - Providers are composed in `providers/web3-provider.tsx` and mounted in `app/layout.tsx`.
