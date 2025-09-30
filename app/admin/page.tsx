@@ -36,10 +36,6 @@ export default function AdminPage() {
   const [burnAddress, setBurnAddress] = useState("")
   const [burnAmount, setBurnAmount] = useState("")
 
-  // Admin Mint State
-  const [mintAddress, setMintAddress] = useState("")
-  const [mintAmount, setMintAmount] = useState("")
-
   // Transfer Admin State
   const [newAdminAddress, setNewAdminAddress] = useState("")
 
@@ -65,8 +61,6 @@ export default function AdminPage() {
         setTokenAddress("")
         setRescueAddress("")
         setRescueAmount("")
-        setMintAddress("")
-        setMintAmount("")
         router.refresh()
       } else if (txStatus === "reverted") {
         toast({
@@ -191,39 +185,13 @@ export default function AdminPage() {
     }
   }
 
-  const handleAdminMint = async () => {
-    if (!mintAddress || !mintAmount) {
-      toast({ title: "Error", description: "Please fill all fields", variant: "destructive" })
-      return
-    }
-
-    try {
-      setCurrentAction("Admin Mint")
-      writeContract({
-        address: USD_SC_ADDRESS,
-        abi: USD_SC_ABI,
-        functionName: "mint",
-        args: [mintAddress as `0x${string}`, parseUnits(mintAmount, 18)],
-      })
-      toast({ title: "Transaction Submitted", description: "Minting tokens..." })
-    } catch (error) {
-      toast({ title: "Error", description: (error as Error).message, variant: "destructive" })
-    }
-  }
-
-
-
   return (
     <DashboardLayout title="Admin Dashboard" description="Manage roles, permissions, and administrative functions">
       <Tabs defaultValue="roles" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5 lg:w-auto">
+        <TabsList className="grid w-full grid-cols-4 lg:w-auto">
           <TabsTrigger value="roles">
             <Users className="w-4 h-4 mr-2" />
             Roles
-          </TabsTrigger>
-          <TabsTrigger value="mint">
-            <Coins className="w-4 h-4 mr-2" />
-            Mint
           </TabsTrigger>
           <TabsTrigger value="burn">
             <Trash2 className="w-4 h-4 mr-2" />
@@ -316,53 +284,6 @@ export default function AdminPage() {
                   </li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Admin Burn Tab */}
-        {/* Admin Mint Tab */}
-        <TabsContent value="mint" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Coins className="w-5 h-5" />
-                Admin Mint
-              </CardTitle>
-              <CardDescription>Mint tokens to any address (admin privilege)</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Alert>
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  This action will create new USD-SC tokens and send them to the specified address.
-                </AlertDescription>
-              </Alert>
-
-              <div className="space-y-2">
-                <Label htmlFor="mint-address">Recipient Address</Label>
-                <Input
-                  id="mint-address"
-                  placeholder="0x..."
-                  value={mintAddress}
-                  onChange={(e) => setMintAddress(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="mint-amount">Amount (USD-SC)</Label>
-                <Input
-                  id="mint-amount"
-                  type="number"
-                  placeholder="0.00"
-                  value={mintAmount}
-                  onChange={(e) => setMintAmount(e.target.value)}
-                />
-              </div>
-
-              <Button onClick={handleAdminMint} disabled={isPending || isConfirming} className="w-full">
-                {isPending || isConfirming ? "Processing..." : "Mint Tokens"}
-              </Button>
             </CardContent>
           </Card>
         </TabsContent>
