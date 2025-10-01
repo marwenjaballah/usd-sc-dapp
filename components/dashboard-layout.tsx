@@ -7,7 +7,7 @@ import { useContractRoles } from "@/hooks/use-contract-roles"
 import { useTokenData } from "@/hooks/use-token-data"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Shield, Coins, Ban, Pause, FileCheck, LayoutDashboard, Menu, X } from "lucide-react"
+import { Shield, Coins, Ban, Pause, FileCheck, LayoutDashboard, Menu, X, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
@@ -33,6 +33,7 @@ export function DashboardLayout({ children, title, description }: DashboardLayou
     { name: "Sharia Supervisor", href: "/sharia-supervisor", icon: FileCheck, show: isShariaSupervisor },
     { name: "Blacklister", href: "/blacklister", icon: Ban, show: isBlacklister },
     { name: "Pauser", href: "/pauser", icon: Pause, show: isPauser },
+    { name: "Docs", href: "/docs", icon: FileText, show: true },
   ].filter((item) => item.show)
 
   return (
